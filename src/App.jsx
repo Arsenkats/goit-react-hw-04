@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
+import Zaglushka from "./components/Zaglushka/Zaglushka";
 
 const App = () => {
   const [images, setImages] = useState([]);
@@ -45,7 +46,7 @@ const App = () => {
     <>
       <Header setSearchValue={setSearchValue} />
       {isSearching && <Loader />}
-      {!isSearching && images.length === 0 && <p></p>}
+      {!isSearching && images.length === 0 && <Zaglushka />}
       <ImageGallery images={images} />
       <ToastContainer />
       {images.length > 0 && <LoadMoreBtn handleChangePage={handleChangePage} />}

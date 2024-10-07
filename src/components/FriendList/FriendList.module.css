@@ -1,0 +1,35 @@
+.friendList{
+    display: flex;
+    margin: 10px;
+    gap: 10px;
+}
+
+.friendList  li{
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.friendList li > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    font-family: Tahoma, Verdana, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+}
+
+.onlineStat{
+    font-size: 14px;
+    font-weight: 400;
+    color: green;
+}
+
+.offlineStat {
+    font-size: 14px;
+    font-weight: 400;
+    color: red;
+}
+

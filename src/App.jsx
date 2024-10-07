@@ -8,19 +8,31 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import Zaglushka from "./components/Zaglushka/Zaglushka";
+import ModalImage from "./components/ModalImage/ModalImage";
 
 const App = () => {
   const [images, setImages] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [page, setPage] = useState(1);
   const [searchValue, setSearchValue] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+
+  useEffect(() => {
+    if (searchValue) {
+      setImages([]);
+      setPage(1);
+    }
+  }, [searchValue]);
 
   useEffect(() => {
     const handleSearch = async () => {
       if (!searchValue) return;
+
       try {
         setIsSearching(true);
         const data = await fetchImages(searchValue, page);
+
         if (page === 1) {
           setImages(data.results);
         } else {
@@ -42,14 +54,31 @@ const App = () => {
     setPage((prev) => prev + 1);
   };
 
+  const openModal = (imageUrl) => {
+    setSelectedImage(imageUrl);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedImage("");
+  };
+
   return (
     <>
       <Header setSearchValue={setSearchValue} />
-      {isSearching && <Loader />}
+
       {!isSearching && images.length === 0 && <Zaglushka />}
-      <ImageGallery images={images} />
+      <ImageGallery images={images} onImageClick={openModal} />
+      {isSearching && <Loader />}
       <ToastContainer />
       {images.length > 0 && <LoadMoreBtn handleChangePage={handleChangePage} />}
+
+      <ModalImage
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        imageUrl={selectedImage}
+      />
     </>
   );
 };

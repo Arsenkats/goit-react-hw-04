@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Header from "./components/Header/Header";
+import SearchBar from "./components/SearchBar/SearchBar";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import { fetchImages } from "./services/api";
 import Loader from "./components/Loader/Loader";
@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import Zaglushka from "./components/Zaglushka/Zaglushka";
-import ModalImage from "./components/ModalImage/ModalImage";
+import ImageModal from "./components/ImageModal/ImageModal";
 
 const App = () => {
   const [images, setImages] = useState([]);
@@ -66,7 +66,7 @@ const App = () => {
 
   return (
     <>
-      <Header setSearchValue={setSearchValue} />
+      <SearchBar setSearchValue={setSearchValue} />
 
       {!isSearching && images.length === 0 && <Zaglushka />}
       <ImageGallery images={images} onImageClick={openModal} />
@@ -74,7 +74,7 @@ const App = () => {
       <ToastContainer />
       {images.length > 0 && <LoadMoreBtn handleChangePage={handleChangePage} />}
 
-      <ModalImage
+      <ImageModal
         isOpen={isModalOpen}
         onClose={closeModal}
         imageUrl={selectedImage}
